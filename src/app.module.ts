@@ -6,6 +6,7 @@ import { TodoModule } from './todo/todo.module';
 import { TodoEntity } from './entity/todo.entity';
 import { UserModule } from './user/user.module';
 import { UserEntity } from './entity/user.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -18,7 +19,7 @@ import { UserEntity } from './entity/user.entity';
     autoLoadEntities: true,
     synchronize: true,
     entities: [TodoEntity, UserEntity],
-}), TodoModule, UserModule,],
+}), TodoModule, UserModule, AuthModule,],
   controllers: [AppController],
   providers: [AppService],
 })

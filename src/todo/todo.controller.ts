@@ -1,11 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, UseGuards, ValidationPipe } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TodoEntity } from 'src/entity/todo.entity';
 import { Repository } from 'typeorm';
 import { TodoService } from './todo.service';
-
+import { createTodoDto } from 'src/dto/createTodo.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { User } from 'src/auth/user.decorator';
+import { UserEntity } from 'src/entity/user.entity';
 
 @Controller('todo')
+@UseGuards(AuthGuard())
 export class TodoController {
     
     constructor(private todoService: TodoService) {
@@ -13,8 +17,8 @@ export class TodoController {
     }
     
     @Get()
-    getAllJobs() {
-      return this.todoService.getAllItems();
+    getAllJobs(@User() user: UserEntity) {
+      return this.todoService.getAllItems(user);
     }
 
     @Get(':id')
@@ -23,8 +27,9 @@ export class TodoController {
     }
 
     @Post()
-    createJob(@Body('title') title: string, @Body('description') description: string) {
-        return this.todoService.createItem(title, description);
+    createJob(@Body(ValidationPipe) data: createTodoDto, @User() user: UserEntity) {
+      const { title, description } = data
+      return this.todoService.createItem(data, user);
     }
 
     @Patch(':id')

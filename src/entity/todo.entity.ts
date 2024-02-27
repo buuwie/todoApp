@@ -11,4 +11,8 @@ export class TodoEntity {
     description: string;
     @Column({default: 0})
     isCompleted: boolean;
+    @ManyToOne(() => UserEntity, (user) => user.todos)
+    user: UserEntity;
+    @Column()
+    userId: number;
 }
