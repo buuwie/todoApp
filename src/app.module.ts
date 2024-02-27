@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoModule } from './todo/todo.module';
 import { TodoEntity } from './entity/todo.entity';
-import { UserModule } from './user/user.module';
 import { UserEntity } from './entity/user.entity';
 import { AuthModule } from './auth/auth.module';
 
@@ -19,7 +18,7 @@ import { AuthModule } from './auth/auth.module';
     autoLoadEntities: true,
     synchronize: true,
     entities: [TodoEntity, UserEntity],
-}), TodoModule, UserModule, AuthModule,],
+}), TodoModule, AuthModule,],
   controllers: [AppController],
   providers: [AppService],
 })
