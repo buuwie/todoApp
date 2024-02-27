@@ -45,7 +45,7 @@ export class TodoService {
             job.isCompleted = isCompleted;
             return this.repo.save(job);
         }
-        else throw new InternalServerErrorException('Job not found');
+        else throw new InternalServerErrorException('Todo not found');
     }
 
     async deleteItem (id: number) {
@@ -53,7 +53,7 @@ export class TodoService {
         if (job) {
             return this.repo.delete(id).then(() => {});
         }
-        else throw new InternalServerErrorException('Job not found.');
+        else throw new InternalServerErrorException('Todo not found.');
     }
     
 }
